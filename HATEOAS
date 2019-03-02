@@ -1,0 +1,22 @@
+// pom.xml
+	<dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-hateoas</artifactId>
+    </dependency>
+    
+    
+// UserResource.java 
+    @GetMapping("/users/{id}")
+	public Resource<User> retrieveUser(@PathVariable int id) {
+		User user = service.findOne(id);
+		if (user == null) { // returns error if user is not found
+			throw new UserNotFoundException("id-" + id); 
+		}
+		
+		// HATEOAS
+		Resource<User> resource = new Resource<User>(user);
+		ControllerLinkBuilder linkTo = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(this.getClass()).retrieveAllUsers());
+		resource.add(linkTo.withRel("all-users"));
+		
+		return resource;
+	}
