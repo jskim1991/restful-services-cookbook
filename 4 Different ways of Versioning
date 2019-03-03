@@ -23,7 +23,7 @@ public class PersonVersioningController {
 		return new PersonV2(new Name("Bob", "Charlie"));
 	}
 	
-	// Header Versioning 
+	// (Custom) Header Versioning 
 	@GetMapping(value="/person/header", headers="X-API-VERSION=1")
 	public PersonV1 headerV1() {
 		return new PersonV1("Bob Charlie");
@@ -34,7 +34,7 @@ public class PersonVersioningController {
 		return new PersonV2(new Name("Bob", "Charlie"));
 	}
 	
-	// Accept Header Versioning or mime type Versioning
+	// Accept Header Versioning or mime type Versioning or content negotiation or media type versioning
 	@GetMapping(value="/person/produces", produces="application/vnd.company.app-v1+json")
 	public PersonV1 produceV1() {
 		return new PersonV1("Bob Charlie");
