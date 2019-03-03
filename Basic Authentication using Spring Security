@@ -1,0 +1,15 @@
+// pom.xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+In logs, find the below statement and use it in authentication under Postman or etc.
+Using generated security password: 54772884-4f79-48b2-820d-0cf79707b41a
+
+
+Basic authentication can be defined in application.properties.
+
+// application.properties
+spring.security.user.name=username
+spring.security.user.password=password
