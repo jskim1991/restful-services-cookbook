@@ -1,0 +1,15 @@
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties(value= {"field2"}) // first way: as array
+public class SomeBean {
+
+	private String field1;
+	private String field2;
+	
+	@JsonIgnore // second way
+	private String field3;
+}
+
+this will only show field1 on GET
