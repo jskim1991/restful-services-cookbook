@@ -1,0 +1,38 @@
+@RestController
+public class FilteringController {
+
+	@GetMapping("/filtering")
+	public MappingJacksonValue retrieveSomeBean() {
+		SomeBean someBean = new SomeBean("value1", "value2", "value3");
+		
+		// filter out field3
+		MappingJacksonValue mapping = new MappingJacksonValue(someBean);
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field1", "field2");
+		FilterProvider filters = new SimpleFilterProvider().addFilter("SomeBeanFilter", filter);
+		mapping.setFilters(filters);
+		return mapping;
+	}
+	
+	@GetMapping("/filtering-list")
+	public MappingJacksonValue retrieveSomeBeans() {
+		List<SomeBean> list = Arrays.asList(new SomeBean("value1", "value2", "value3"), new SomeBean("value1", "value2", "value3"));
+		// filter field1
+		MappingJacksonValue mapping = new MappingJacksonValue(list);
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field2", "field3");
+		FilterProvider filters = new SimpleFilterProvider().addFilter("SomeBeanFilter", filter);
+		mapping.setFilters(filters);
+		return mapping;
+	}
+}
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonFilter("SomeBeanFilter") // for dynamic filter
+public class SomeBean {
+
+	private String field1;
+	private String field2;
+	private String field3;
+}
